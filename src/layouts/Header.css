@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EF66A5;
+    height: 70px;
+}
+
+.nav {
+    align-items: center;
+}
+
+/* ✨ 네비게이션 스타일 */
+.nav a {
+    color: white;  /* ✅ 개별 링크의 글씨 색상 */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.nav a:hover {
+    color: yellow; /* ✅ 호버 시 색상 변경 */
+}

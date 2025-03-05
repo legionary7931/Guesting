@@ -8,6 +8,7 @@ function Header({ setActiveComponent }) {
     <Navbar expand="lg" className="shadow" style={{ backgroundColor: "#EF66A5" }}>
       <Container>
         <Nav className="justify-content-center w-100 d-flex gap-3">
+          <h2 style={{ color: "white", marginLeft: "-10px" }}>Guesting</h2>
           <Button
             onClick={() => setActiveComponent(<Create />)}
             style={{
@@ -41,6 +42,18 @@ function Header({ setActiveComponent }) {
           >
             게스팅 신청
           </Button>
+          <Nav className="ms-auto"> {/* ms-auto로 오른쪽 정렬 */}
+            <Button
+              style={{
+                backgroundColor: "#ef66a5",
+                borderColor: "#ef66a5",
+                fontSize: "14px",
+                padding: "5px 10px",
+              }}
+            >
+              Mypage
+            </Button>
+          </Nav>
         </Nav>
       </Container>
     </Navbar>
@@ -48,3 +61,4 @@ function Header({ setActiveComponent }) {
 }
 
 export default Header;
+

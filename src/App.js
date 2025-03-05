@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [activeComponent, setActiveComponent] = useState(<Team />); // 기본 화면을 Team으로 설정
+	const [activeComponent, setActiveComponent] = useState(); // 기본 화면을 Team으로 설정
 	return (
 	<div className = "App">
 		<Router>

@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "GowunDodum-Regular";
+    font-weight: normal;
+    src: url("../font.ttf") format("truetype");
+  }
+  
+  body {
+    font-family: "GowunDodum-Regular";
+  }
+
 /* 선택된 카드에 날아가는 애니메이션 추가 */
 .selected-card {
     animation: flyIn 0.8s ease-out;

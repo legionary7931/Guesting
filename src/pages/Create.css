@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "GowunDodum-Regular";
+    font-weight: normal;
+    src: url("../font.ttf") format("truetype");
+  }
+  
+  body {
+    font-family: "GowunDodum-Regular";
+  }
+
+/* 선택된 카드에 날아가는 애니메이션 추가 */
+.selected-card {
+    animation: flyIn 0.8s ease-out;
+}
+
+@keyframes flyIn {
+    0% {
+        transform: translateY(-200px); /* 위에서 시작 */
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(30px); /* 살짝 떨어진 위치 */
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(0); /* 원래 위치로 돌아옴 */
+        opacity: 1;
+    }
+}

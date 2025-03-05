@@ -16,21 +16,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [activeComponent, setActiveComponent] = useState(<Team />); // 기본 화면을 Team으로 설정
 	return (
 	<div className = "App">
 		<Router>
 			{isAuthenticated ? (
 			<div>
-				<Header />
-				<BodyContainer>
-					<Routes>
-						<Route path="/team" element={<Team />} />
-						<Route path="/team/create" element={<Create/>}/>
-						<Route path="/team/application" element={<Application/>} />
-						<Route path="/team/guesting" element={<Guesting />} />
-						<Route path="*" element={<Navigate replace to="/team" />} />
-					</Routes>
-				</BodyContainer>
+				<Header setActiveComponent={setActiveComponent} />
+				<BodyContainer activeComponent={activeComponent} />
 			</div>
 			) : (
 			<Login onLogin={() => setIsAuthenticated(true)} />

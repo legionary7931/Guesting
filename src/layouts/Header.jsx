@@ -1,15 +1,16 @@
 import { Navbar, Nav, Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import Team from "../pages/Team";
+import Create from "../pages/Create";
+import Application from "../pages/Application";
+import Guesting from "../pages/Guesting";
 
-function Header() {
-  
-  const navigate = useNavigate();
+function Header({ setActiveComponent }) {
   return (
     <Navbar expand="lg" className="shadow" style={{ backgroundColor: "#EF66A5" }}>
       <Container>
         <Nav className="justify-content-center w-100 d-flex gap-3">
           <Button
-            onClick={() => navigate("/team/create")}
+            onClick={() => setActiveComponent(<Create />)}
             style={{
               backgroundColor: "#ef66a5",
               borderColor: "#ef66a5",
@@ -20,7 +21,7 @@ function Header() {
             팀 생성
           </Button>
           <Button
-             onClick={() => navigate("/team/application")}
+            onClick={() => setActiveComponent(<Application />)}
             style={{
               backgroundColor: "#ef66a5",
               borderColor: "#ef66a5",
@@ -31,7 +32,7 @@ function Header() {
             신청 목록 조회
           </Button>
           <Button
-             onClick={() => navigate("/team/guesting")}
+            onClick={() => setActiveComponent(<Guesting />)}
             style={{
               backgroundColor: "#ef66a5",
               borderColor: "#ef66a5",

@@ -1,5 +1,4 @@
 import { Navbar, Nav, Button, Container } from "react-bootstrap";
-import Team from "../pages/Team";
 import Create from "../pages/Create";
 import Application from "../pages/Application";
 import Guesting from "../pages/Guesting";

@@ -4,7 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import logo1 from "../assets/Logo1.png"; // 이미지 파일 import
 
-export default function Login() {
+
+export default function Login({ onLogin }) {
+
   const [credentials, setCredentials] = useState({
     id: "",
     password: "",
@@ -30,28 +32,28 @@ export default function Login() {
       password: credentials.password,
     };
 
-  console.log("📤 Sending request:", JSON.stringify(requestBody, null, 2));
-
     try {
       const response = await fetch("http://localhost:9000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         alert("로그인 성공!");
-        console.log(data);
+        onLogin();
       } else {
         alert(data.message);
+        onLogin();
       }
     } catch (error) {
       console.error("Error:", error);
       alert("서버 오류!");
+      onLogin();
     }
   };
 

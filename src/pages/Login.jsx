@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import logo1 from "./assets/Logo1.png"; // 이미지 파일 import
+import logo1 from "../assets/Logo1.png"; // 이미지 파일 import
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
@@ -13,10 +13,9 @@ export default function Login() {
   
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
     setCredentials((prev) => ({
       ...prev,
-      [name]: name === "id" ? Number(value) || "" : value,
+      [name]: value,
     }));
   };
   
@@ -25,6 +24,13 @@ export default function Login() {
     e.preventDefault();
 
     console.log("📤 Sending request:", JSON.stringify(credentials, null, 2));
+
+    const requestBody = {
+      id: Number(credentials.id),
+      password: credentials.password,
+    };
+
+  console.log("📤 Sending request:", JSON.stringify(requestBody, null, 2));
 
     try {
       const response = await fetch("http://localhost:9000/login", {

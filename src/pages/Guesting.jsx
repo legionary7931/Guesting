@@ -6,123 +6,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Guesting() {
     const [teams, setTeams] = useState([]);
     const [regists, setRegists] = useState([]);
+    const [currentRequest, setCurrentRequest] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState(null);
-    const [error, setError] = useState(null);
+    const [sentRegists, setSentRegists] = useState([]);
+    const [action, setAction] = useState('');
 
-    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const fetchRegists = async () => {
+        try {
+            const response = await axios.get("http://localhost:9000/receivedRegists");
+            setRegists(response.data.data);
+        } catch (err) {
+            console.error("API 요청 실패:", err);
+        }
+    };
 
     useEffect(() => {
 
-        const fallbackTeams = [
-            {
-                teamId: 1,
-                name: "teamgogo",
-                memberResList: [
-                    { memberId: 1, name: "alex", intro: "hello my name is alex", gender: "male" },
-                    { memberId: 2, name: "sac", intro: "hello my name is sac", gender: "male" },
-                    { memberId: 3, name: "dam", intro: "hello my name is dam", gender: "male" },
-                    { memberId: 4, name: "was", intro: "hello my name is was", gender: "female" },
-                ],
-            },
-            {
-                teamId: 2,
-                name: "teamalpha",
-                memberResList: [
-                    { memberId: 1, name: "lily", intro: "hello, I'm lily", gender: "female" },
-                    { memberId: 2, name: "john", intro: "hello, I'm john", gender: "male" },
-                    { memberId: 3, name: "mark", intro: "hello, I'm mark", gender: "male" },
-                    { memberId: 4, name: "zara", intro: "hello, I'm zara", gender: "female" },
-                ],
-            },
-            {
-                teamId: 3,
-                name: "teamvision",
-                memberResList: [
-                    { memberId: 1, name: "emma", intro: "hello, I'm emma", gender: "female" },
-                    { memberId: 2, name: "robert", intro: "hello, I'm robert", gender: "male" },
-                    { memberId: 3, name: "ben", intro: "hello, I'm ben", gender: "male" },
-                    { memberId: 4, name: "lucy", intro: "hello, I'm lucy", gender: "female" },
-                ],
-            },
-            {
-                teamId: 4,
-                name: "teamblue",
-                memberResList: [
-                    { memberId: 1, name: "kevin", intro: "hello, I'm kevin", gender: "male" },
-                    { memberId: 2, name: "jane", intro: "hello, I'm jane", gender: "female" },
-                    { memberId: 3, name: "tina", intro: "hello, I'm tina", gender: "female" },
-                    { memberId: 4, name: "jason", intro: "hello, I'm jason", gender: "male" },
-                ],
-            },
-        ];
 
-        const fallbackRegists = [
-            {
-                registId: 1,
-                receiveTeam: {
-                    teamId: 1,
-                    name: "teamgogo",
-                    memberResList: [
-                        { memberId: 1, name: "alex", intro: "hello my name is alex", gender: "male" },
-                        { memberId: 2, name: "sac", intro: "hello my name is sac", gender: "male" },
-                        { memberId: 3, name: "dam", intro: "hello my name is dam", gender: "male" },
-                        { memberId: 4, name: "was", intro: "hello my name is was", gender: "female" },
-                    ],
-                },
-                regdate: "2025-03-05T14:00:00",
-                status: "대기중",
-                houseRes: { houseId: 1, name: "playhouse", addr: "서울시강남구" },
-            },
-            {
-                registId: 2,
-                receiveTeam: {
-                    teamId: 2,
-                    name: "teamalpha",
-                    memberResList: [
-                        { memberId: 1, name: "lily", intro: "hello, I'm lily", gender: "female" },
-                        { memberId: 2, name: "john", intro: "hello, I'm john", gender: "male" },
-                        { memberId: 3, name: "mark", intro: "hello, I'm mark", gender: "male" },
-                        { memberId: 4, name: "zara", intro: "hello, I'm zara", gender: "female" },
-                    ],
-                },
-                regdate: "2025-03-06T10:30:00",
-                status: "대기중",
-                houseRes: { houseId: 2, name: "dreamhouse", addr: "서울시종로구" },
-            },
-            {
-                registId: 3,
-                receiveTeam: {
-                    teamId: 3,
-                    name: "teamvision",
-                    memberResList: [
-                        { memberId: 1, name: "emma", intro: "hello, I'm emma", gender: "female" },
-                        { memberId: 2, name: "robert", intro: "hello, I'm robert", gender: "male" },
-                        { memberId: 3, name: "ben", intro: "hello, I'm ben", gender: "male" },
-                        { memberId: 4, name: "lucy", intro: "hello, I'm lucy", gender: "female" },
-                    ],
-                },
-                regdate: "2025-03-07T16:20:00",
-                status: "대기중",
-                houseRes: { houseId: 3, name: "sunnyhouse", addr: "서울시서초구" },
-            },
-            {
-                registId: 4,
-                receiveTeam: {
-                    teamId: 4,
-                    name: "teamblue",
-                    memberResList: [
-                        { memberId: 1, name: "kevin", intro: "hello, I'm kevin", gender: "male" },
-                        { memberId: 2, name: "jane", intro: "hello, I'm jane", gender: "female" },
-                        { memberId: 3, name: "tina", intro: "hello, I'm tina", gender: "female" },
-                        { memberId: 4, name: "jason", intro: "hello, I'm jason", gender: "male" },
-                    ],
-                },
-                regdate: "2025-03-08T11:45:00",
-                status: "대기중",
-                houseRes: { houseId: 4, name: "bluehouse", addr: "서울시강서구" },
-            },
-        ];
 
         const fetchTeam = async () => {
             try {
@@ -130,22 +32,24 @@ function Guesting() {
                 setTeams(response.data.data);
             } catch (err) {
                 console.error("API 요청 실패:", err);
-                setTeams(fallbackTeams);
+
             }
         };
 
-        const fetchRegists = async () => {
+
+
+        const fetchSentRegists = async () => {
             try {
                 const response = await axios.get("http://localhost:9000/sentRegists");
-                setRegists(response.data.data);
+                if (response.data.data) {
+                    setSentRegists(response.data.data);
+                }
             } catch (err) {
                 console.error("API 요청 실패:", err);
-                setError("데이터를 불러오는 데 실패하여 예시 데이터를 사용합니다.");
-                setRegists(fallbackRegists);
             }
         };
 
-        
+        fetchSentRegists();
         fetchTeam();
         fetchRegists();
     }, []);
@@ -160,9 +64,70 @@ function Guesting() {
         setSelectedTeam(null);
     };
 
-    const handleSubmitRequest = () => {
-        // 여기서 신청 처리를 할 수 있습니다.
-        console.log(`${selectedTeam.name} 팀에 신청했습니다.`);
+    const handleShowModal2 = (request, actionType) => {
+        setCurrentRequest(request);
+        setAction(actionType);
+        setShowModal2(true);
+    };
+
+    const handleCloseModal2 = () => setShowModal2(false);
+
+    const handleConfirmAction = async () => {
+        if (action === 'accept') {
+            try {
+                const response = await axios.put("http://localhost:9000/regists/accept", {
+                    registId: currentRequest.registId
+                });
+                if (response.status === 200) {
+                    alert("게스팅 매칭 수락!");
+                    fetchRegists();
+                } else {
+                    alert("알수없는 오류로 실패!");
+                }
+            } catch (error) {
+                console.log(error)
+                alert(error);
+            } finally {
+                setShowModal2(false); // 로딩이 끝나면 모달을 닫습니다
+            }
+        } else if (action === 'reject') {
+            try {
+                console.log(currentRequest)
+                const response = await axios.put("http://localhost:9000/regists/decline", {
+                    registId: currentRequest.registId
+                });
+                if (response.status === 200) {
+                    alert("게스팅 거절!");
+                    fetchRegists();
+                } else {
+                    alert("알수없는 오류로 실패!");
+                }
+            } catch (error) {
+                console.log(error)
+                alert(error);
+            } finally {
+                setShowModal2(false); // 로딩이 끝나면 모달을 닫습니다
+            }
+        }
+        setShowModal(false);
+    };
+
+    const handleSubmitRequest = async () => {
+        try {
+            console.log(selectedTeam);
+            const response = await axios.post("http://localhost:9000/guestings", {
+                teamId: selectedTeam.teamId
+            });
+            if (response.status === 200) {
+                alert("게스팅 요청 성공!");
+            } else {
+                alert("게스팅 요청 실패!");
+            }
+        } catch (error) {
+            console.log(error)
+            alert(error);
+        }
+
         handleCloseModal();
     };
 
@@ -172,6 +137,7 @@ function Guesting() {
             <Row className="w-50" style={{ maxHeight: "500px", overflowY: "auto" }}>
                 <Col>
                     <h3>팀 목록</h3>
+                    <p>게스팅 하고 싶은 팀을 골라서 요청을 보내보세요! 한 번에 한 팀만 가능합니다!</p>
                     <ListGroup>
                         {teams.map((team) => (
                             <ListGroup.Item key={team.teamId}>
@@ -190,9 +156,19 @@ function Guesting() {
                                         </Col>
                                     ))}
                                 </Row>
-                                <Button variant="primary" onClick={() => handleShowModal(team)}>
-                                    게스팅 신청
+                                <Button
+                                    style={{
+                                        backgroundColor: sentRegists.length > 0 ? "#f5a6c5" : "#ef66a5",
+                                        color: "white",
+                                        border: "none"
+                                    }}
+                                    onClick={() => handleShowModal(team)}
+                                    disabled={sentRegists.length > 0} // 배열이 비어 있지 않으면 비활성화
+                                >
+                                    {sentRegists.length > 0 ? "신청 완료" : "게스팅 신청"}
                                 </Button>
+
+
                             </ListGroup.Item>
                         ))}
                     </ListGroup>
@@ -203,17 +179,36 @@ function Guesting() {
             <Row className="w-50" style={{ maxHeight: "500px", overflowY: "auto", marginLeft: "20px" }}>
                 <Col>
                     <h3>받은 게스팅 신청</h3>
+                    <p>받은 신청을 수락하거나 거절하세요. 수락한다면 나머지 팀은 모두 거절됩니다</p>
                     <ListGroup>
                         {regists.map((request) => (
                             <ListGroup.Item key={request.registId}>
                                 <Card>
                                     <Card.Body>
-                                        <Card.Title>{request.receiveTeam.name}</Card.Title>
+                                        <Card.Title>{request.sendTeam.name}</Card.Title>
                                         <Card.Subtitle className="mb-2 text-muted">
-                                            요청 날짜: {request.regdate}
+                                            요청 날짜: {request.regDate}
                                         </Card.Subtitle>
                                         <Card.Text>상태: {request.status}</Card.Text>
                                         <Card.Text>주소: {request.houseRes.addr}</Card.Text>
+                                        {/* 상태가 "대기중"일 때만 버튼 표시 */}
+                                        {request.status === "대기 중" && (
+                                            <>
+                                                <Button
+                                                    variant="success"
+                                                    onClick={() => handleShowModal2(request, 'accept')}
+                                                >
+                                                    수락
+                                                </Button>
+                                                <Button
+                                                    variant="danger"
+                                                    onClick={() => handleShowModal2(request, 'reject')}
+                                                    className="ml-2"
+                                                >
+                                                    거절
+                                                </Button>
+                                            </>
+                                        )}
                                     </Card.Body>
                                 </Card>
                             </ListGroup.Item>
@@ -221,6 +216,7 @@ function Guesting() {
                     </ListGroup>
                 </Col>
             </Row>
+
 
             {/* 모달 */}
             <Modal show={showModal} onHide={handleCloseModal}>
@@ -236,6 +232,27 @@ function Guesting() {
                     </Button>
                     <Button variant="primary" onClick={handleSubmitRequest}>
                         신청
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* 모달 */}
+            <Modal show={showModal2} onHide={handleCloseModal2}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{action === 'accept' ? '수락' : '거절'} 확인</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    정말로 이 요청을 {action === 'accept' ? '수락' : '거절'}하시겠습니까?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal2}>
+                        취소
+                    </Button>
+                    <Button
+                        variant={action === 'accept' ? 'success' : 'danger'}
+                        onClick={handleConfirmAction}
+                    >
+                        확인
                     </Button>
                 </Modal.Footer>
             </Modal>

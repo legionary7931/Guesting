@@ -12,7 +12,7 @@ function MyPage() {
         const fetchMyInfo = async () => {
             try {
                 const response = await axios.get("http://localhost:9000/mypage");
-                setMyInfo(response.data);
+                setMyInfo(response.data.data);
             } catch (error) {
                 console.log("Error fetching my information", error);
             }
@@ -21,7 +21,7 @@ function MyPage() {
         const fetchMyMatch = async () => {
             try {
                 const response = await axios.get("http://localhost:9000/myMatchings");
-                setMyMatch(response.data);
+                setMyMatch(response.data.data);
             } catch (error) {
                 console.log("Error fetching my information", error);
             }
@@ -115,35 +115,7 @@ function MyPage() {
                         <p><strong>숙소 이름:</strong> {myMatch.houseRes.name}</p>
                         <p><strong>주소:</strong> {myMatch.houseRes.addr}</p>
 
-                        <h5 style={{ marginTop: "10px" }}>팀원 목록</h5>
-                        <div
-                            style={{
-                                display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                                gap: "15px",
-                                marginTop: "10px"
-                            }}
-                        >
-                            {myMatch.receiveTeam.memberResList?.map((member, index) => (
-                                <motion.div
-                                    key={index}
-                                    style={{
-                                        padding: "10px",
-                                        borderRadius: "8px",
-                                        backgroundColor: "#FFFFFF",
-                                        boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-                                        textAlign: "left"
-                                    }}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                >
-                                    <p><strong>이름:</strong> {member.name}</p>
-                                    <p><strong>소개:</strong> {member.intro}</p>
-                                    <p><strong>성별:</strong> {member.gender === "male" ? "남성" : "여성"}</p>
-                                </motion.div>
-                            ))}
-                        </div>
+                        
                     </div>
                 ) : (
                     <p>매칭된 팀 정보가 없습니다.</p>

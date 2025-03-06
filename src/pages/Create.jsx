@@ -69,8 +69,7 @@ function Create() {
         try {
             await delay(1000); // 1초 delay
             const mypageRes = await axios.get("http://localhost:9000/mypage");
-            console.log(mypageRes);
-            if (mypageRes.data.sendTeam) {
+            if (mypageRes.data.data.sendTeam) {
                 alert("이미 팀이 존재합니다!");
                 return;
             }

@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Container, Row, Col, Card, ListGroup, Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Guesting() {
     const [teams, setTeams] = useState([]);
-    const [receivedRequests, setReceivedRequests] = useState([]);
+    const [regists, setRegists] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState(null);
+    const [error, setError] = useState(null);
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     useEffect(() => {
-        const teamData = [
+
+        const fallbackTeams = [
             {
                 teamId: 1,
                 name: "teamgogo",
@@ -52,10 +57,10 @@ function Guesting() {
             },
         ];
 
-        const receivedData = [
+        const fallbackRegists = [
             {
                 registId: 1,
-                sendTeam: {
+                receiveTeam: {
                     teamId: 1,
                     name: "teamgogo",
                     memberResList: [
@@ -71,7 +76,7 @@ function Guesting() {
             },
             {
                 registId: 2,
-                sendTeam: {
+                receiveTeam: {
                     teamId: 2,
                     name: "teamalpha",
                     memberResList: [
@@ -87,7 +92,7 @@ function Guesting() {
             },
             {
                 registId: 3,
-                sendTeam: {
+                receiveTeam: {
                     teamId: 3,
                     name: "teamvision",
                     memberResList: [
@@ -103,7 +108,7 @@ function Guesting() {
             },
             {
                 registId: 4,
-                sendTeam: {
+                receiveTeam: {
                     teamId: 4,
                     name: "teamblue",
                     memberResList: [
@@ -119,8 +124,30 @@ function Guesting() {
             },
         ];
 
-        setTeams(teamData);
-        setReceivedRequests(receivedData);
+        const fetchTeam = async () => {
+            try {
+                const response = await axios.get("http://localhost:9000/teams");
+                setTeams(response.data.data);
+            } catch (err) {
+                console.error("API 요청 실패:", err);
+                setTeams(fallbackTeams);
+            }
+        };
+
+        const fetchRegists = async () => {
+            try {
+                const response = await axios.get("http://localhost:9000/sentRegists");
+                setRegists(response.data.data);
+            } catch (err) {
+                console.error("API 요청 실패:", err);
+                setError("데이터를 불러오는 데 실패하여 예시 데이터를 사용합니다.");
+                setRegists(fallbackRegists);
+            }
+        };
+
+        
+        fetchTeam();
+        fetchRegists();
     }, []);
 
     const handleShowModal = (team) => {
@@ -177,11 +204,11 @@ function Guesting() {
                 <Col>
                     <h3>받은 게스팅 신청</h3>
                     <ListGroup>
-                        {receivedRequests.map((request) => (
+                        {regists.map((request) => (
                             <ListGroup.Item key={request.registId}>
                                 <Card>
                                     <Card.Body>
-                                        <Card.Title>{request.sendTeam.name}</Card.Title>
+                                        <Card.Title>{request.receiveTeam.name}</Card.Title>
                                         <Card.Subtitle className="mb-2 text-muted">
                                             요청 날짜: {request.regdate}
                                         </Card.Subtitle>

@@ -8,11 +8,11 @@ const REQUIRED_SELECTION = 3; // 반드시 3명 선택
 
 // 예시 데이터
 const fallbackMembers = [
-    { id: 1, name: "아이언맨", gender: "male", intro: "천재, 억만장자, 자선가" },
-    { id: 2, name: "캡틴 아메리카", gender: "male", intro: "정의로운 리더" },
-    { id: 3, name: "블랙 위도우", gender: "female", intro: "세계 최고 요원" },
-    { id: 4, name: "토르", gender: "male", intro: "천둥의 신" },
-    { id: 5, name: "헐크", gender: "male", intro: "분노 조절 실패" },
+    { memberId: 1, name: "아이언맨", gender: "male", intro: "천재, 억만장자, 자선가" },
+    { memberId: 2, name: "캡틴 아메리카", gender: "male", intro: "정의로운 리더" },
+    { memberId: 3, name: "블랙 위도우", gender: "female", intro: "세계 최고 요원" },
+    { memberId: 4, name: "토르", gender: "male", intro: "천둥의 신" },
+    { memberId: 5, name: "헐크", gender: "male", intro: "분노 조절 실패" },
 ];
 
 function Create() {
@@ -69,17 +69,16 @@ function Create() {
         try {
             await delay(1000); // 1초 delay
             const mypageRes = await axios.get("http://localhost:9000/mypage");
-            if (mypageRes.data.team) {
+            console.log(mypageRes);
+            if (mypageRes.data.sendTeam) {
                 alert("이미 팀이 존재합니다!");
                 return;
             }
 
             const response = await axios.post("http://localhost:9000/teams", {
-                data: {
-                    memberId1: selectedMembers[0],
-                    memberId2: selectedMembers[1],
-                    memberId3: selectedMembers[2],
-                },
+                memberId1: selectedMembers[0],
+                memberId2: selectedMembers[1],
+                memberId3: selectedMembers[2],
             });
 
             if (response.status === 200) {
@@ -116,10 +115,10 @@ function Create() {
                                 </Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">{members[currentIndex].intro}</Card.Subtitle>
                                 <Button
-                                    variant={selectedMembers.includes(members[currentIndex].id) ? "danger" : "primary"}
-                                    onClick={() => handleSelect(members[currentIndex].id)}
+                                    variant={selectedMembers.includes(members[currentIndex].memberId) ? "danger" : "primary"}
+                                    onClick={() => handleSelect(members[currentIndex].memberId)}
                                 >
-                                    {selectedMembers.includes(members[currentIndex].id) ? "선택 취소" : "선택"}
+                                    {selectedMembers.includes(members[currentIndex].memberId) ? "선택 취소" : "선택"}
                                 </Button>
                             </Card.Body>
                         </Card>
@@ -134,9 +133,9 @@ function Create() {
                 <div className="selected-container mt-4">
                     <h4>내 팀원</h4>
                     {selectedMembers.map((id) => {
-                        const member = members.find((member) => member.id === id);
+                        const member = members.find((member) => member.memberId === id);
                         return (
-                            <Card key={member.id} className="selected-card">
+                            <Card key={member.memberId} className="selected-card">
                                 <Card.Body>
                                     <Card.Title>
                                         {member.name} {getGenderEmoji(member.gender)}

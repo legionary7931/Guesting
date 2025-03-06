@@ -3,7 +3,7 @@ import React from "react";
 import axios from "axios";
 import { motion } from "framer-motion"; // 애니메이션 추가
 
-
+axios.defaults.withCredentials = true;
 function MyPage() {
     const [myInfo, setMyInfo] = useState({});
     const [myMatch, setMyMatch] = useState({});

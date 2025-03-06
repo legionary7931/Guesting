@@ -3,17 +3,20 @@ import { Table } from "react-bootstrap";
 import React from "react";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
 
 function Application() {
   const [sentApplications, setSentApplications] = useState([]); // 내가 보낸 신청
   const [receivedApplications, setReceivedApplications] = useState([]); // 내가 받은 신청
-
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   useEffect(() => {
     // 실제 API 호출 대신 예시 데이터를 사용합니다.
     const fetchSentData = async () => {
         try {
+          await delay(1000);
           const response = await axios.get("http://localhost:9000/receivedRegists"); // /receivedRegists GET 요청
           setSentApplications(response.data); // 데이터 설정
+          
         } catch (error) {
           console.log("Error fetching sent applications:", error);
         }
@@ -24,6 +27,7 @@ function Application() {
     try {
         const response = await axios.get("http://localhost:9000/sentRegists"); // /sentRegists GET 요청
         setReceivedApplications(response.data); // 데이터 설정
+
     } catch (error) {
         console.log("Error fetching received applications:", error);
     }
@@ -31,6 +35,9 @@ function Application() {
   
     fetchSentData();
     fetchReceivedData();
+
+    console.log(sentApplications);
+    console.log(receivedApplications);
   }, []);
 
   const renderTableSection = (applications, title) => (
@@ -51,6 +58,8 @@ function Application() {
             </thead>
             <tbody>
                 {applications.map((application, appIdx) => { // appIdx: 팀 단위 인덱스
+
+                    
                     const memberCount = application.sendTeam.memberResList.length;
                     const backgroundColor = appIdx % 2 === 0 ? "#f4ecf0" : "transparent"; // 팀 단위로 색상 변경
 

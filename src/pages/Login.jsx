@@ -42,9 +42,11 @@ export default function Login({ onLogin }) {
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok) {
         alert("로그인 성공!");
+        
         onLogin();
       } else {
         alert(data.message);
@@ -53,7 +55,7 @@ export default function Login({ onLogin }) {
     } catch (error) {
       console.error("Error:", error);
       alert("서버 오류!");
-      onLogin();
+
     }
   };
 

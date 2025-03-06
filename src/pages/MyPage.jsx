@@ -111,7 +111,7 @@ function MyPage() {
                     >
                         <p><strong>팀 이름:</strong> {myMatch.receiveTeam.name}</p>
                         <p><strong>매칭 상태:</strong> {myMatch.status}</p>
-                        <p><strong>매칭 날짜:</strong> {new Date(myMatch.regdate).toLocaleDateString()}</p>
+                        <p><strong>매칭 날짜:</strong> {myMatch.regDate}</p>
                         <p><strong>숙소 이름:</strong> {myMatch.houseRes.name}</p>
                         <p><strong>주소:</strong> {myMatch.houseRes.addr}</p>
 

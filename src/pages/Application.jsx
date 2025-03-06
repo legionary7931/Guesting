@@ -60,12 +60,19 @@ function Application() {
             </thead>
             <tbody>
               {applications.map((application, appIdx) => {
-                const memberCount = application.sendTeam.memberResList.length;
+
+                // 보낸신청 -> receivedTeam, 받은 신청 -> sendTeam
+                const memberCount = 4;
                 const backgroundColor = appIdx % 2 === 0 ? "#f4ecf0" : "transparent"; // 팀 단위로 색상 변경
+                
+                const members = applications === sentApplications
+                                ? application.receiveTeam
+                                : application.sendTeam;
 
                 return (
                   <React.Fragment key={application.registId}>
-                    {application.sendTeam.memberResList.map((member, idx) => (
+                    
+                    {members.memberResList.map((member, idx) => (
                       <tr key={`${application.registId}-${member.memberId}`} 
                           style={{ borderBottom: "2px solid #dee2e6", backgroundColor }}>
                         <td style={{ width: "15%" }}>
@@ -76,8 +83,8 @@ function Application() {
                         <td style={{ width: "10%" }}>{member.gender}</td>
                         {idx === 0 && ( // 팀의 첫 번째 멤버인 경우만 rowSpan 적용
                           <>
-                            <td style={{ width: "15%" }} rowSpan={memberCount}>{application.sendTeam.name}</td>
-                            <td style={{ width: "15%" }} rowSpan={memberCount}>{new Date(application.regdate).toLocaleString()}</td>
+                            <td style={{ width: "15%" }} rowSpan={memberCount}>{members.name}</td>
+                            <td style={{ width: "15%" }} rowSpan={memberCount}>{application.regDate}</td>
                             <td style={{ width: "10%" }} rowSpan={memberCount}>{application.status}</td>
                             <td style={{ width: "15%" }} rowSpan={memberCount}>{application.houseRes.name}</td>
                             <td style={{ width: "20%" }} rowSpan={memberCount}>{application.houseRes.addr}</td>

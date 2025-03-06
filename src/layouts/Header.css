@@ -17,6 +17,20 @@
     height: 70px;
 }
 
+
+button {
+    background-color: #ef66a5;
+    border-color: #ef66a5;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+button:hover {
+    background-color: #f5a6c5; /* Hover 시 배경 색상 변경 */
+    transform: scale(1.05); /* Hover 시 크기 확대 */
+}
+
 .nav {
     align-items: center;
 }

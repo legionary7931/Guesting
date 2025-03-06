@@ -2,6 +2,7 @@ import { Navbar, Nav, Button, Container } from "react-bootstrap";
 import Create from "../pages/Create";
 import Application from "../pages/Application";
 import Guesting from "../pages/Guesting";
+import MyPage from "../pages/MyPage";
 
 function Header({ setActiveComponent }) {
   return (
@@ -44,6 +45,7 @@ function Header({ setActiveComponent }) {
           </Button>
           <Nav className="ms-auto"> {/* ms-auto로 오른쪽 정렬 */}
             <Button
+              onClick={() => setActiveComponent(<MyPage />)}
               style={{
                 backgroundColor: "#ef66a5",
                 borderColor: "#ef66a5",

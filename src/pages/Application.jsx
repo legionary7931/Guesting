@@ -12,7 +12,7 @@ function Application() {
     // 실제 API 호출 대신 예시 데이터를 사용합니다.
     const fetchSentData = async () => {
         try {
-          const response = await axios.get("/receivedRegists"); // /receivedRegists GET 요청
+          const response = await axios.get("http://localhost:9000/receivedRegists"); // /receivedRegists GET 요청
           setSentApplications(response.data); // 데이터 설정
         } catch (error) {
           console.log("Error fetching sent applications:", error);
@@ -22,7 +22,7 @@ function Application() {
     // 내가 받은 신청 데이터 요청
     const fetchReceivedData = async () => {
     try {
-        const response = await axios.get("/sentRegists"); // /sentRegists GET 요청
+        const response = await axios.get("http://localhost:9000/sentRegists"); // /sentRegists GET 요청
         setReceivedApplications(response.data); // 데이터 설정
     } catch (error) {
         console.log("Error fetching received applications:", error);

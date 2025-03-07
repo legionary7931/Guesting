@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Card, Button, Container, Row, Col, Spinner, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,8 +21,6 @@ function Create() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [error, setError] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
-    const navigate = useNavigate(); 
 
     // Delay function to simulate API delay
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -85,7 +82,6 @@ function Create() {
 
             if (response.status === 200) {
                 alert("팀 생성 성공!");
-                navigate("/team");
             } else {
                 alert("팀 생성 실패");
             }

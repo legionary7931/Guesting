@@ -44,8 +44,7 @@ function MyPage() {
         <p style={{ borderBottom: "2px solid #dee2e6", paddingBottom: "10px" }}>
             내 정보를 확인하세요!
         </p>
-        <div className="container" style={{ flex: 1, overflow: "hidden" }}>
-            <h4>내 정보</h4>
+        <div className="container" style={{ flex: 1.3, overflow: "hidden" }}>
             {myInfo && Object.keys(myInfo).length > 0 ? (
                 <div>
                     <p><strong>이름:</strong> {myInfo.name}</p>
@@ -110,7 +109,6 @@ function MyPage() {
                         }}
                     >
                         <p><strong>팀 이름:</strong> {myMatch.receiveTeam.name}</p>
-                        <p><strong>매칭 상태:</strong> {myMatch.status}</p>
                         <p><strong>매칭 날짜:</strong> {myMatch.regDate}</p>
                         <p><strong>숙소 이름:</strong> {myMatch.houseRes.name}</p>
                         <p><strong>주소:</strong> {myMatch.houseRes.addr}</p>

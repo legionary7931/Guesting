@@ -10,6 +10,7 @@ body {
 
 html{
   background-color: #f4ecf0;
+  overflow: "hidden";
 }
 
 .App {

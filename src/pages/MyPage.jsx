@@ -48,7 +48,7 @@ function MyPage() {
             <h4>내 정보</h4>
             {myInfo && Object.keys(myInfo).length > 0 ? (
                 <div>
-                    <p><strong>등록 ID:</strong> {myInfo.memberId}</p>
+                    <p><strong>이름:</strong> {myInfo.name}</p>
                     <p><strong>팀 이름:</strong> {myInfo.sendTeam?.name || "없음"}</p>
                     <p><strong>자기 소개:</strong> {myInfo.intro || "없음"}</p>
 

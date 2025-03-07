@@ -3,13 +3,19 @@ import Create from "../pages/Create";
 import Application from "../pages/Application";
 import Guesting from "../pages/Guesting";
 import MyPage from "../pages/MyPage";
+import Team from "../pages/Team";
 
 function Header({ setActiveComponent }) {
   return (
     <Navbar expand="lg" className="shadow" style={{ backgroundColor: "#EF66A5" }}>
       <Container>
         <Nav className="justify-content-center w-100 d-flex gap-3">
-          <h2 style={{ color: "white", marginLeft: "-10px" }}>Guesting</h2>
+          <h2
+            style={{ color: "white", marginLeft: "-10px", cursor: "pointer" }}
+            onClick={() => setActiveComponent(<Team />)}  
+          >
+            Guesting
+          </h2>
           <Button
             onClick={() => setActiveComponent(<Create />)}
             style={{

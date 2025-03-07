@@ -14,7 +14,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [activeComponent, setActiveComponent] = useState(); // 기본 화면을 Team으로 설정
+	const [activeComponent, setActiveComponent] = useState(Team); // 기본 화면을 Team으로 설정
+
+	const handleLogin = () => {
+		setIsAuthenticated(true);
+		setActiveComponent(Team); // 로그인 후 기본 페이지를 Team으로 설정
+	  };
+
 	return (
 	<div className = "App">
 		<Router>
@@ -24,7 +30,7 @@ function App() {
 				<BodyContainer activeComponent={activeComponent} />
 			</div>
 			) : (
-			<Login onLogin={() => setIsAuthenticated(true)} />
+			<Login onLogin={handleLogin} />
 			)}
 	  </Router>
 	</div>

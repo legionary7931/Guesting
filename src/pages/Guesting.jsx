@@ -80,6 +80,13 @@ function Guesting() {
                 });
                 if (response.status === 200) {
                     alert("게스팅 매칭 수락!");
+                    const rejectRequests = regists
+                    .filter(request => request.registId !== currentRequest.registId)
+                    .map(request => axios.put("http://localhost:9000/regists/decline", {
+                        registId: request.registId
+                    }));
+
+                await Promise.all(rejectRequests);
                     fetchRegists();
                 } else {
                     alert("알수없는 오류로 실패!");
